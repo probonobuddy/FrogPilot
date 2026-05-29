@@ -1,0 +1,1031 @@
+.home {
+  --home-success: #78d46b;
+  --home-warning: #f0c15f;
+  --home-panel: #121b16;
+  --home-panel-deep: #0a100d;
+  --home-panel-raised: #18251d;
+  --home-cell: #0e1712;
+  --home-line: color-mix(in srgb, var(--color-border) 72%, #5b6c60);
+  --home-quiet-line: color-mix(in srgb, var(--color-border) 82%, #151d18);
+
+  /* Shared instrument-rail system so Home Badge + Your Totals read as one hardware strip. */
+  --home-rail-accent: var(--color-accent);
+  --home-rail-surface:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 46%),
+    #0b110d;
+  --home-rail-cell-min: 50px;
+  --home-rail-pad-x: var(--space-3);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0 auto;
+  min-height: calc(100vh - (var(--space-6) * 2));
+  width: min(100%, 1340px);
+}
+
+.home-header {
+  align-items: center;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.home-title {
+  color: var(--color-text);
+  font-size: var(--font-size-xl);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+
+.home-subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-1);
+}
+
+.home-refresh-note {
+  background: rgba(240, 193, 95, 0.11);
+  border: 1px solid rgba(240, 193, 95, 0.42);
+  border-radius: var(--radius);
+  color: var(--color-text-secondary);
+  padding: var(--space-3) var(--space-4);
+}
+
+.home-console,
+.home-main-grid,
+.home-primary-grid {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.home-console {
+  align-items: start;
+}
+
+.home-main-grid {
+  align-content: start;
+}
+
+.home-widget {
+  background: var(--home-panel);
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-4);
+}
+
+.home-widget-header {
+  align-items: center;
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+  min-height: 34px;
+}
+
+.home-widget-heading {
+  align-items: center;
+  display: flex;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.home-widget-icon {
+  align-items: center;
+  background: var(--home-cell);
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  flex: none;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.home-widget-title {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  font-weight: 760;
+  letter-spacing: 0;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.home-action {
+  align-items: center;
+  background: var(--home-cell);
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--font-size-sm);
+  font-weight: 720;
+  justify-content: center;
+  min-height: 34px;
+  padding: var(--space-1) var(--space-3);
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    color var(--transition);
+}
+
+.home-action:hover {
+  background: rgba(106, 190, 79, 0.1);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.home-action:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.home-source-notes,
+.home-breakdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.home-source-notes {
+  color: var(--home-warning);
+  display: grid;
+  font-size: var(--font-size-sm);
+  gap: var(--space-1);
+}
+
+.home-empty {
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.home-glance-stack {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.home-glance-stack > .home-source-notes {
+  background: rgba(240, 193, 95, 0.1);
+  border: 1px solid rgba(240, 193, 95, 0.32);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+}
+
+.home-vehicle-logo {
+  color: currentColor;
+  display: block;
+  flex: none;
+  height: 52px;
+  width: 52px;
+}
+
+.home-vehicle-logo-image {
+  filter: invert(91%) sepia(9%) saturate(185%) hue-rotate(76deg) brightness(91%) contrast(90%);
+  object-fit: contain;
+}
+
+.home-vehicle-logo-fallback {
+  align-items: center;
+  display: inline-flex;
+  font-size: 1.12rem;
+  font-weight: 840;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* Home Badge — slim segmented instrument rail (mockup A "Precision Instrument Rail").
+   One bordered rail; cells share a 1px divider via the line-colored grid gap. Wide screens
+   render a single 7-cell row; narrower widths compress to a 3- then 2-column grid. */
+.home-badge {
+  background: var(--home-line);
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 1px;
+  /* max-content floor keeps every value fully readable; the fr cap spreads slack so the row
+     fills the rail. The single-row layout only engages on wide screens (see breakpoint below). */
+  grid-template-columns: minmax(max-content, 1.6fr) repeat(6, minmax(max-content, 1fr));
+  isolation: isolate;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.home-badge-cell {
+  align-items: center;
+  background: var(--home-rail-surface);
+  display: flex;
+  gap: var(--space-2);
+  min-height: var(--home-rail-cell-min);
+  min-width: 0;
+  padding: var(--space-2) var(--home-rail-pad-x);
+}
+
+.home-badge-identity {
+  /* Tighter vertical padding lets the 40px logo tile nearly fill the slim rail height. */
+  gap: var(--space-3);
+  justify-content: flex-start;
+  padding-bottom: var(--space-1);
+  padding-top: var(--space-1);
+}
+
+.home-badge-stat {
+  justify-content: center;
+  text-align: center;
+}
+
+.home-badge-logo {
+  align-items: center;
+  background: var(--home-panel-raised);
+  border: 1px solid color-mix(in srgb, var(--home-line) 78%, var(--color-text-muted));
+  border-radius: var(--radius-sm);
+  /* Subtle top bevel so the logo chip reads as machined chrome like mockup A. */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: inline-flex;
+  flex: none;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.home-badge-logo .home-vehicle-logo {
+  height: 28px;
+  width: 28px;
+}
+
+.home-badge-logo .home-vehicle-logo-image {
+  /* Neutral silver mark, not the green-tinted fork glyph used elsewhere. */
+  filter: brightness(0) invert(0.9);
+}
+
+.home-badge-logo .home-vehicle-logo-fallback {
+  color: var(--color-text-secondary);
+  font-size: 0.72rem;
+}
+
+.home-badge-vehicle {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  font-weight: 660;
+  line-height: 1.12;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-badge-icon {
+  align-items: center;
+  color: var(--color-text-muted);
+  display: inline-flex;
+  flex: none;
+  justify-content: center;
+}
+
+/* Nudge the rail glyph stroke a touch heavier than the app default so the icons carry mockup
+   A's instrument weight (scoped to the two rails; the shared Icon stays Feather-light elsewhere). */
+.home-badge-icon .icon,
+.home-total-stat-icon .icon {
+  stroke-width: 2.1;
+}
+
+.home-badge-avatar {
+  border: 1px solid var(--home-line);
+  border-radius: 50%;
+  flex: none;
+  height: 20px;
+  object-fit: cover;
+  width: 20px;
+}
+
+/* Fallback maintainer glyph stays neutral gray like the mockup's person icon; the green
+   accent on this cell lives on the maintainer name only, so it is excluded from the accent rule. */
+.home-badge-avatar-fallback {
+  align-items: center;
+  background: var(--home-panel-raised);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  justify-content: center;
+}
+
+.home-badge-value {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-badge-uptime .home-badge-value {
+  overflow: visible;
+  overflow-wrap: break-word;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+.home-badge-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-badge-link-content {
+  align-items: center;
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.home-badge-link:hover .home-badge-value {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.home-badge-link:focus-visible {
+  border-radius: var(--radius-sm);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.home-badge-cell-accent .home-badge-icon,
+.home-badge-cell-accent .home-badge-value,
+.home-badge-cell-ok .home-badge-icon,
+.home-badge-cell-ok .home-badge-value,
+.home-badge-cell-available .home-badge-icon,
+.home-badge-cell-available .home-badge-value {
+  color: var(--home-rail-accent);
+}
+
+.home-badge-cell-busy .home-badge-icon,
+.home-badge-cell-busy .home-badge-value {
+  color: var(--home-warning);
+}
+
+.home-badge-cell-info .home-badge-value {
+  color: #6bd7f0;
+}
+
+.home-badge-cell-unknown .home-badge-value {
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 1280px) {
+  .home-badge {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-badge-identity {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-badge {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 360px) {
+  .home-badge {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-drive-stats {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+}
+
+.home-fact {
+  min-width: 0;
+}
+
+.home-fact dd {
+  color: var(--color-text);
+  font-weight: 760;
+  line-height: 1.25;
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.home-latest {
+  align-self: stretch;
+  background: var(--home-rail-surface);
+  gap: var(--space-3);
+  min-height: 360px;
+  overflow: hidden;
+}
+
+.home-latest .home-widget-header {
+  border-bottom: 1px solid var(--home-line);
+  padding-bottom: var(--space-3);
+}
+
+.home-drive-stats {
+  background: var(--home-line);
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius-sm);
+  grid-template-columns: repeat(auto-fit, minmax(98px, 1fr));
+  overflow: hidden;
+}
+
+.home-drive-stats .home-fact {
+  background: var(--home-cell);
+  min-height: 66px;
+  padding: var(--space-3);
+}
+
+.home-drive-stats-strip {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.home-drive-stats-strip .home-fact {
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+.home-drive-stats-strip .home-fact dd,
+.home-drive-stats-strip .home-fact dt {
+  text-align: center;
+}
+
+.home-latest-strip-map {
+  --home-latest-map-height: 230px;
+
+  display: flex;
+  flex: 1 1 var(--home-latest-map-height);
+  height: auto;
+  min-height: var(--home-latest-map-height);
+  min-width: 0;
+}
+
+.home-latest-strip-map .home-route-map {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+}
+
+.home-latest-strip-map .home-route-map svg {
+  min-height: 0;
+}
+
+.home-route-map {
+  background:
+    linear-gradient(135deg, rgba(106, 190, 79, 0.05), transparent 34%),
+    #07100c;
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius-sm);
+  flex: 1 1 auto;
+  min-height: 300px;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.home-route-map svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.home-map-road {
+  fill: none;
+  stroke: rgba(198, 209, 201, 0.14);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-map-road-main {
+  stroke-width: 3.4;
+}
+
+.home-map-road-secondary {
+  stroke-width: 2.4;
+}
+
+.home-map-road-minor {
+  stroke-width: 1.35;
+}
+
+.home-route-line {
+  fill: none;
+  stroke: #93ed66;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.home-route-point {
+  fill: var(--home-panel-deep);
+  stroke: #93ed66;
+  stroke-width: 1.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.home-route-point-end {
+  fill: #93ed66;
+}
+
+.home-map-empty {
+  background: rgba(10, 16, 13, 0.92);
+  border: 1px solid var(--home-line);
+  border-radius: 999px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 720;
+  left: 50%;
+  padding: var(--space-2) var(--space-3);
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+}
+
+.home-storage {
+  background: #101913;
+}
+
+.home-storage .home-widget-header {
+  border-bottom: 1px solid var(--home-line);
+  padding-bottom: var(--space-3);
+}
+
+.home-storage-capacity {
+  align-items: stretch;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+
+.home-storage-dial {
+  align-self: center;
+  aspect-ratio: 1;
+  background: var(--home-cell);
+  border: 1px solid var(--home-line);
+  border-radius: 50%;
+  display: grid;
+  isolation: isolate;
+  justify-self: center;
+  max-width: 184px;
+  min-width: 0;
+  place-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.home-storage-dial::before {
+  background: conic-gradient(
+    var(--color-accent) 0 var(--home-storage-used),
+    rgba(255, 255, 255, 0.08) var(--home-storage-used) 100%
+  );
+  border-radius: inherit;
+  content: "";
+  inset: 10px;
+  position: absolute;
+  z-index: -2;
+}
+
+.home-storage-dial::after {
+  background: var(--home-panel);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: inherit;
+  content: "";
+  inset: 31px;
+  position: absolute;
+  z-index: -1;
+}
+
+.home-storage-dial-core {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  text-align: center;
+}
+
+.home-storage-dial-core strong {
+  color: var(--color-text);
+  font-size: 1.58rem;
+  font-weight: 840;
+  line-height: 0.95;
+}
+
+.home-storage-dial-core span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.home-storage-side {
+  align-content: start;
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.home-storage-stat-grid {
+  background: var(--home-line);
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: hidden;
+}
+
+.home-storage-stat {
+  align-content: center;
+  background: var(--home-cell);
+  display: grid;
+  gap: var(--space-1);
+  justify-items: center;
+  min-height: 64px;
+  min-width: 0;
+  padding: var(--space-3);
+  text-align: center;
+}
+
+.home-storage-stat span {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.home-storage-stat strong {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  font-weight: 800;
+  line-height: 1.05;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.home-breakdown {
+  background: var(--home-line);
+  border: 1px solid var(--home-line);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  overflow: hidden;
+}
+
+.home-breakdown li {
+  align-items: center;
+  background: var(--home-cell);
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+  min-height: 42px;
+  padding: var(--space-2) var(--space-3);
+}
+
+.home-breakdown span,
+.home-breakdown strong {
+  overflow-wrap: anywhere;
+}
+
+.home-totals-widget {
+  /* Flat shared rail surface (no green gradient) so it reads as the same hardware strip
+     as the Home Badge above it. */
+  background: var(--home-rail-surface);
+  display: grid;
+  gap: 0;
+  grid-template-columns: 1fr;
+  min-height: 100px;
+  overflow: hidden;
+  padding: 0;
+}
+
+.home-totals-widget > .home-source-notes {
+  background: rgba(240, 193, 95, 0.1);
+  border-bottom: 1px solid var(--home-line);
+  grid-column: 1;
+  padding: var(--space-3) var(--space-4);
+}
+
+.home-totals-ledger {
+  display: grid;
+  grid-column: 1;
+  min-width: 0;
+}
+
+.home-total-rail {
+  align-items: center;
+  background: transparent;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) repeat(3, minmax(0, 1fr));
+  min-height: var(--home-rail-cell-min);
+  min-width: 0;
+}
+
+.home-total-rail + .home-total-rail {
+  border-top: 1px solid var(--home-line);
+}
+
+.home-total-source,
+.home-total-stat {
+  align-items: center;
+  display: flex;
+  gap: var(--space-3);
+  min-height: var(--home-rail-cell-min);
+  min-width: 0;
+  padding: var(--space-2) var(--home-rail-pad-x);
+}
+
+.home-total-stat {
+  border-left: 1px solid var(--home-line);
+  gap: var(--space-2);
+  justify-content: center;
+  text-align: center;
+}
+
+.home-total-source {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.home-total-source-mark {
+  align-items: center;
+  display: flex;
+  flex: none;
+  height: 24px;
+  justify-content: center;
+  width: 24px;
+}
+
+.home-total-source-mark-frogpilot img,
+.home-total-source-mark-openpilot img {
+  display: block;
+  height: 24px;
+  object-fit: contain;
+  width: 24px;
+}
+
+.home-total-source-mark-openpilot {
+  opacity: 0.88;
+}
+
+.home-total-source h3 {
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  font-weight: 720;
+  letter-spacing: 0;
+  line-height: 1.15;
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* FrogPilot row carries the green accent on its brand + icons only; values stay white in
+   both rows (mockup A), so the numbers read as instrumentation rather than colored metrics.
+   openpilot brand stays near-white (the default above): it recedes from FrogPilot by hue
+   (white vs green), not by dimming, matching mockup A. */
+.home-total-rail-frogpilot .home-total-source h3,
+.home-total-rail-frogpilot .home-total-stat-icon {
+  color: var(--home-rail-accent);
+}
+
+.home-total-stat-icon,
+.home-total-stat-unit {
+  align-self: center;
+  color: var(--color-text-muted);
+  flex: none;
+  font-size: var(--font-size-sm);
+  line-height: 1;
+}
+
+.home-total-stat-icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.home-total-stat-icon .icon {
+  height: 20px;
+  width: 20px;
+}
+
+.home-total-stat strong {
+  color: var(--color-text);
+  flex: none;
+  font-size: 1.12rem;
+  font-weight: 720;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.home-total-stat-unit {
+  white-space: nowrap;
+}
+
+@media (min-width: 920px) {
+  .home-primary-grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(282px, 0.82fr);
+  }
+
+  .home-route-map {
+    min-height: 356px;
+  }
+
+  .home-latest-strip-map {
+    --home-latest-map-height: 300px;
+  }
+}
+
+@media (min-width: 1180px) {
+  .home-latest {
+    min-height: 430px;
+  }
+
+  .home-route-map {
+    min-height: 392px;
+  }
+
+  .home-latest-strip-map {
+    --home-latest-map-height: 328px;
+  }
+}
+
+@media (max-width: 700px) {
+  .home {
+    gap: var(--space-3);
+  }
+
+  .home-widget {
+    padding: var(--space-3);
+  }
+
+  .home-totals-widget {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .home-total-rail {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    min-height: var(--home-rail-cell-min);
+  }
+
+  .home-total-source,
+  .home-total-stat {
+    min-height: var(--home-rail-cell-min);
+  }
+
+  .home-total-source {
+    gap: var(--space-2);
+  }
+
+  .home-total-source-mark,
+  .home-total-source-mark-frogpilot img,
+  .home-total-source-mark-openpilot img {
+    height: 22px;
+    width: 22px;
+  }
+
+  .home-total-source h3 {
+    font-size: 0.84rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Keep value + unit inline on one baseline at the in-app width (mockup A); shrink to fit. */
+  .home-total-stat {
+    gap: 6px;
+  }
+
+  .home-total-stat-icon .icon {
+    height: 18px;
+    width: 18px;
+  }
+
+  .home-total-stat strong {
+    font-size: 0.9rem;
+  }
+
+  .home-total-stat-unit {
+    font-size: 0.7rem;
+  }
+
+  .home-route-map {
+    min-height: 238px;
+  }
+
+  .home-latest-strip-map {
+    --home-latest-map-height: 268px;
+  }
+
+  .home-drive-stats-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-storage-capacity {
+    grid-template-columns: 1fr;
+  }
+
+  .home-storage-dial {
+    max-width: 176px;
+  }
+}
+
+@media (max-width: 590px) {
+  /* Below the in-app width, inline value+unit no longer fits; stack icon / value / unit
+     vertically so even the widest total ("12,450 miles") stays readable on small phones.
+     The source column keeps extra width so the brand names never clip. */
+  .home-total-rail {
+    grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+  }
+
+  .home-total-stat {
+    align-items: center;
+    display: grid;
+    gap: 2px;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+  }
+
+  .home-total-stat strong {
+    font-size: var(--font-size-sm);
+  }
+
+  .home-total-stat-unit {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-header {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .home-widget-header,
+  .home-breakdown li {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .home-action {
+    width: 100%;
+  }
+
+  .home-drive-stats-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-totals-widget {
+    grid-template-columns: 1fr;
+  }
+
+  .home-totals-widget > .home-source-notes,
+  .home-totals-ledger {
+    grid-column: 1;
+  }
+
+  /* Tighten the totals rail on very small phones so brand names + wide values still fit. */
+  .home-total-source,
+  .home-total-stat {
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+
+  .home-total-source {
+    gap: var(--space-1);
+  }
+
+  .home-total-source-mark,
+  .home-total-source-mark-frogpilot img,
+  .home-total-source-mark-openpilot img {
+    height: 18px;
+    width: 18px;
+  }
+
+  .home-total-source h3 {
+    font-size: 0.78rem;
+  }
+
+  .home-total-stat strong {
+    font-size: 0.8rem;
+  }
+
+  .home-total-stat-unit {
+    font-size: 0.65rem;
+  }
+}
