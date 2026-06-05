@@ -145,7 +145,7 @@ def sanitize_can_messages(messages):
   return [
     {
       "address": can_frame.address,
-      "busTime": can_frame.busTime,
+      "busTime": can_frame.busTimeDEPRECATED,
       "dat": bytes(can_frame.dat),
       "src": can_frame.src,
     }
