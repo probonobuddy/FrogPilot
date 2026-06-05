@@ -11,10 +11,10 @@ FrogPilotWheelPanel::FrogPilotWheelPanel(FrogPilotSettingsWindow *parent) : Frog
   }
 
   const std::vector<std::tuple<QString, QString, QString, QString>> wheelToggles {
-    {"DistanceButtonControl", tr("Distance Button"), tr("<b>Action performed when the \"Distance\" button is pressed.</b>"), "../../frogpilot/assets/toggle_icons/icon_mute.png"},
-    {"LongDistanceButtonControl", tr("Distance Button (Long Press)"), tr("<b>Action performed when the \"Distance\" button is pressed for more than 0.5 seconds.</b>"), "../../frogpilot/assets/toggle_icons/icon_mute.png"},
-    {"VeryLongDistanceButtonControl", tr("Distance Button (Very Long Press)"), tr("<b>Action performed when the \"Distance\" button is pressed for more than 2.5 seconds.</b>"), "../../frogpilot/assets/toggle_icons/icon_mute.png"},
-    {"LKASButtonControl", tr("LKAS Button"), tr("<b>Action performed when the \"LKAS\" button is pressed.</b>"), "../../frogpilot/assets/toggle_icons/icon_mute.png"}
+    {"DistanceButtonControl", tr("Distance Button"), tr("<b>A quick press of the car's \"Distance\" button runs the FrogPilot action you assign.</b> Some actions change how openpilot steers, accelerates, or brakes. Pick the action you want, or \"No Action\" to leave the button at its stock function. The speed-control actions need openpilot controlling speed.<br><br>Default: Change \"Personality Profile\"."), "../../frogpilot/assets/toggle_icons/icon_mute.png"},
+    {"LongDistanceButtonControl", tr("Distance Button (Long Press)"), tr("<b>Holding the car's \"Distance\" button past 0.5 seconds runs the FrogPilot action you assign.</b> Some actions change how openpilot steers, accelerates, or brakes. Pick the action you want, or \"No Action\" to leave the long press unused. The speed-control actions need openpilot controlling speed.<br><br>Default: Toggle \"Experimental Mode\" On/Off."), "../../frogpilot/assets/toggle_icons/icon_mute.png"},
+    {"VeryLongDistanceButtonControl", tr("Distance Button (Very Long Press)"), tr("<b>Holding the car's \"Distance\" button past 2.5 seconds runs this action and repeats whatever the long press is set to.</b> Some actions change how openpilot steers, accelerates, or brakes. Choosing \"No Action\" leaves only this very-long slot unused. The long-press action still fires once you pass 2.5 seconds.<br><br>Default: Toggle \"Traffic Mode\" On/Off."), "../../frogpilot/assets/toggle_icons/icon_mute.png"},
+    {"LKASButtonControl", tr("LKAS Button"), tr("<b>Pressing the car's \"LKAS\" button runs the FrogPilot action you assign.</b> Some actions change how openpilot steers, accelerates, or brakes. Pick the action you want, or \"No Action\" to leave the button unused. Only \"No Action\" and \"Pause Steering\" work without openpilot controlling speed.<br><br>Default: Toggle \"Experimental Mode\" On/Off."), "../../frogpilot/assets/toggle_icons/icon_mute.png"}
   };
 
   for (const auto &[param, title, desc, icon] : wheelToggles) {

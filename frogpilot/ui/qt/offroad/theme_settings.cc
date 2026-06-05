@@ -241,20 +241,20 @@ FrogPilotThemesPanel::FrogPilotThemesPanel(FrogPilotSettingsWindow *parent) : Fr
   themesLayout->addWidget(customThemesPanel);
 
   const std::vector<std::tuple<QString, QString, QString, QString>> themeToggles {
-    {"PersonalizeOpenpilot", tr("Custom Themes"), tr("<b>The overall look and feel of openpilot.</b> Use the \"Theme Maker\" in \"The Pond\" to create and share your own themes!"), "../../frogpilot/assets/toggle_icons/icon_frog.png"},
-    {"CustomColors", tr("Color Scheme"), tr("<b>The color scheme used throughout openpilot.</b> Use the \"Theme Maker\" in \"The Pond\" to create and share your own themes!"), ""},
-    {"CustomDistanceIcons", tr("Distance Button"), tr("<b>The distance button icons shown on the driving screen.</b> Use the \"Theme Maker\" in \"The Pond\" to create and share your own themes!"), ""},
-    {"CustomIcons", tr("Icon Pack"), tr("<b>The icon style used across openpilot.</b> Use the \"Theme Maker\" in \"The Pond\" to create and share your own themes!"), ""},
-    {"CustomSounds", tr("Sound Pack"), tr("<b>The sound pack used by openpilot.</b> Use the \"Theme Maker\" in \"The Pond\" to create and share your own themes!"), ""},
-    {"WheelIcon", tr("Steering Wheel"), tr("<b>The steering-wheel icon</b> shown at the top-right of the driving screen. Use the \"Theme Maker\" in \"The Pond\" to create and share your own themes!"), ""},
-    {"CustomSignals", tr("Turn Signal"), tr("<b>Themed turn-signal animations.</b> Use the \"Theme Maker\" in \"The Pond\" to create and share your own themes!"), ""},
+    {"PersonalizeOpenpilot", tr("Custom Themes"), tr("<b>Change the overall look and sound of openpilot, including its colors, icons, sounds, steering-wheel icon, distance-button icons, and turn-signal animations.</b>"), "../../frogpilot/assets/toggle_icons/icon_frog.png"},
+    {"CustomColors", tr("Color Scheme"), tr("<b>The color scheme for openpilot's interface.</b> \"SELECT\" to choose one, \"DOWNLOAD\" to add more, \"DELETE\" to remove a downloaded one."), ""},
+    {"CustomDistanceIcons", tr("Distance Icons"), tr("<b>The icons for the on-screen follow-distance display.</b> \"SELECT\" to choose one, \"DOWNLOAD\" to add more, \"DELETE\" to remove a downloaded one."), ""},
+    {"CustomIcons", tr("Icon Pack"), tr("<b>The icon pack used for all across openpilot.</b> \"SELECT\" to choose one, \"DOWNLOAD\" to add more, \"DELETE\" to remove a downloaded one."), ""},
+    {"CustomSounds", tr("Sound Pack"), tr("<b>The sound pack openpilot uses for all of openpilot's alerts and chimes.</b> \"SELECT\" to choose one, \"DOWNLOAD\" to add more, \"DELETE\" to remove a downloaded one."), ""},
+    {"WheelIcon", tr("Steering Wheel Icon"), tr("<b>The steering-wheel icon at the top-right of the driving screen.</b> \"SELECT\" to choose one, \"DOWNLOAD\" to add more, \"DELETE\" to remove a downloaded one."), ""},
+    {"CustomSignals", tr("Turn Signal Animation"), tr("<b>The animation shown on the driving screen when your turn signal is on.</b> \"SELECT\" to choose one, \"DOWNLOAD\" to add more, \"DELETE\" to remove a downloaded one."), ""},
     {"DownloadStatusLabel", tr("Download Status"), "", ""},
 
-    {"HolidayThemes", tr("Holiday Themes"), tr("<b>Themes based on U.S. holidays.</b> Minor holidays last one day; major holidays (Christmas, Easter, Halloween) run for a full week."), "../../frogpilot/assets/toggle_icons/icon_calendar.png"},
-    {"RainbowPath", tr("Rainbow Path"), tr("<b>Color the driving path like a Mario Kart–style \"Rainbow Road\".</b>"), "../../frogpilot/assets/toggle_icons/icon_rainbow.png"},
-    {"RandomEvents", tr("Random Events"), tr("<b>Occasional on-screen effects triggered by driving conditions.</b> These are purely a visual and don't impact how openpilot drives!"), "../../frogpilot/assets/toggle_icons/icon_random.png"},
-    {"RandomThemes", tr("Random Themes"), tr("<b>Pick a random theme between each drive</b> from the themes you have downloaded. Great for variety without changing settings while driving."), "../../frogpilot/assets/toggle_icons/icon_random_themes.png"},
-    {"StartupAlert", tr("Startup Alert"), tr("<b>Customize the \"Startup Alert\" message</b> shown at the start of each drive."), "../../frogpilot/assets/toggle_icons/icon_message.png"}
+    {"HolidayThemes", tr("Holiday Themes"), tr("<b>On U.S. holidays, openpilot automatically swaps its colors, icons, sounds, and more to a matching holiday theme.</b> Leave it on for festive auto-themes, or turn it off to keep your own theme year-round."), "../../frogpilot/assets/toggle_icons/icon_calendar.png"},
+    {"RainbowPath", tr("Rainbow Path"), tr("<b>Color the on-screen driving path with an animated rainbow that scrolls faster the quicker you drive.</b> Leave it on if you enjoy the splash of color, or off for the standard path. It never changes how openpilot drives."), "../../frogpilot/assets/toggle_icons/icon_rainbow.png"},
+    {"RandomEvents", tr("Random Events"), tr("<b>Adds occasional joke effects, sounds, and wheel images during certain driving moments, like hard acceleration.</b> Turn it on for fun surprises. Turn it off for standard alerts. These never change how openpilot drives.<br><br><i><b>Disclaimer</b>: if openpilot crashes, this replaces the normal \"openpilot crashed\" warning with a joke version, so the crash can be easier to miss.</i>"), "../../frogpilot/assets/toggle_icons/icon_random.png"},
+    {"RandomThemes", tr("Random Themes"), tr("<b>Each drive, openpilot picks a random theme from the ones you've downloaded.</b> Turn it on for variety from your downloaded themes, or leave it off to keep the specific theme you picked (it needs at least one downloaded theme to work)."), "../../frogpilot/assets/toggle_icons/icon_random_themes.png"},
+    {"StartupAlert", tr("Startup Alert"), tr("<b>Sets the two-line message shown on screen at the start of each drive.</b><br><br>- \"STOCK\": comma's take-over safety reminder<br>- \"FROGPILOT\": FrogPilot's greeting, replacing the safety reminder<br>- \"CUSTOM\": your own top and bottom lines, replacing the safety reminder<br>- \"CLEAR\": reset to FrogPilot's default greeting"), "../../frogpilot/assets/toggle_icons/icon_message.png"}
   };
 
   for (const auto &[param, title, desc, icon] : themeToggles) {

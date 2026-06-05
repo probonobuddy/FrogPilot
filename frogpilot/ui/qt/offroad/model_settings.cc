@@ -63,13 +63,13 @@ FrogPilotModelPanel::FrogPilotModelPanel(FrogPilotSettingsWindow *parent) : Frog
   modelLayout->addWidget(modelLabelsPanel);
 
   const std::vector<std::tuple<QString, QString, QString, QString>> modelToggles {
-    {"AutomaticallyDownloadModels", tr("Automatically Download New Models"), tr("<b>Automatically download new driving models</b> as they become available."), ""},
-    {"DeleteModel", tr("Delete Driving Models"), tr("<b>Delete downloaded driving models</b> to free up storage space."), ""},
-    {"DownloadModel", tr("Download Driving Models"), tr("<b>Manually download driving models</b> to the device."), ""},
-    {"ModelRandomizer", tr("Model Randomizer"), tr("<b>Select a random driving model each drive</b> and use feedback prompts at the end of the drive to help find the model that best suits you!"), ""},
-    {"ManageBlacklistedModels", tr("Manage Model Blacklist"), tr("<b>Add or remove driving models from the \"Model Randomizer\" blacklist.</b>"), ""},
-    {"ManageScores", tr("Manage Model Ratings"), tr("<b>View or reset saved model ratings</b> used by the \"Model Randomizer\"."), ""},
-    {"SelectModel", tr("Select Driving Model"), tr("<b>Choose which driving model openpilot uses.</b>"), ""}
+    {"AutomaticallyDownloadModels", tr("Automatically Download New Driving Models"), tr("<b>Automically downloads the latest driving models to your device as they become available.</b> Leave this on to get new and updated driving models automatically. Turn it off to download and review them yourself."), ""},
+    {"DeleteModel", tr("Delete Driving Models"), tr("<b>Delete downloaded driving models to free up storage.</b> Tap \"DELETE\" to remove one model, or \"DELETE ALL\" to remove every downloaded model. The model you're currently using and the default model can't be deleted."), ""},
+    {"DownloadModel", tr("Download Driving Models"), tr("<b>Fetch alternate openpilot driving models so you can pick them in \"Select Driving Model\".</b> Use \"DOWNLOAD\" to choose one model, or \"DOWNLOAD ALL\" to grab every available model at once."), ""},
+    {"ModelRandomizer", tr("Model Randomizer"), tr("<b>Use a different randomly-chosen driving model at the start of each drive.</b> Turn this on only to compare your downloaded models and rate them afterward. Leave it off to keep the single model you set under \"Select Driving Model\".<br><br><i><b>Disclaimer</b>: A randomly selected model can handle lanes, curves, leads, or stops differently, so the car may steer or brake in ways you do not expect.</i>"), ""},
+    {"ManageBlacklistedModels", tr("Manage Model Blacklist"), tr("<b>Add, remove, or clear driving models on the \"Model Randomizer\" blacklist.</b> Use \"ADD\" to prevent a model you dislike from being picked, \"REMOVE\" to let one back into rotation, or \"REMOVE ALL\" to clear the blacklist."), ""},
+    {"ManageScores", tr("Manage Model Ratings"), tr("<b>View your saved model ratings, or reset them.</b> Use \"VIEW\" to see each model's rating and drive count. Use \"RESET\" to clear all saved ratings so the ranking history starts over."), ""},
+    {"SelectModel", tr("Select Driving Model"), tr("<b>Changing the driving model changes how the car steers, accelerates, and brakes.</b> Pick the default model or a downloaded model only when you are ready to test different steering or braking behavior.<br><br><i><b>Disclaimer</b>: A different model can handle lanes, curves, leads, or stops differently, so the car can steer or brake in ways you do not expect.</i>"), ""}
   };
 
   for (const auto &[param, title, desc, icon] : modelToggles) {
@@ -190,7 +190,7 @@ FrogPilotModelPanel::FrogPilotModelPanel(FrogPilotSettingsWindow *parent) : Frog
           }
 
           if (blacklistableModels.size() <= 1) {
-            ConfirmationDialog::alert(tr("There are no more driving models to blacklist. The only available model is \"%1\"!").arg(blacklistableModels.first()), this);
+            ConfirmationDialog::alert(tr("There are no more driving models to blacklist. The only available model is \"%1\".").arg(blacklistableModels.first()), this);
           } else {
             QString modelToBlacklist = MultiOptionDialog::getSelection(tr("Select a driving model to add to the blacklist"), blacklistableModels, "", this);
             if (!modelToBlacklist.isEmpty()) {

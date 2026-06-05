@@ -20,14 +20,13 @@ FrogPilotMapsPanel::FrogPilotMapsPanel(FrogPilotSettingsWindow *parent) : FrogPi
   FrogPilotListWidget *settingsList = new FrogPilotListWidget(this);
 
   std::vector<QString> scheduleOptions{tr("Manually"), tr("Weekly"), tr("Monthly")};
-  preferredSchedule = new ButtonParamControl("PreferredSchedule", tr("Automatically Update Maps"),
-                                          tr("<b>How often maps update</b> from \"OpenStreetMap (OSM)\" with the latest speed limit information. "
-                                             "Weekly updates run every Sunday; monthly updates run on the 1st."),
+  preferredSchedule = new ButtonParamControl("PreferredSchedule", tr("Map Update Schedule"),
+                                          tr("<b>How often FrogPilot autmatically updates your selected \"OpenStreetMap (OSM)\" data so \"Speed Limit Controller\" has the latest speed limits.</b><br><br>- \"Manually\": Never auto-updates, you tap \"Download Maps\" yourself<br>- \"Weekly\": Re-downloads every Sunday<br>- \"Monthly\": Re-downloads on the 1st<br><br>Default: Monthly."),
                                              "",
                                              scheduleOptions);
   settingsList->addItem(preferredSchedule);
 
-  downloadMapsButton = new ButtonControl(tr("Download Maps"), tr("DOWNLOAD"), tr("<b>Manually update your selected map sources</b> so \"Speed Limit Controller\" has the latest speed limit information."));
+  downloadMapsButton = new ButtonControl(tr("Download Maps"), tr("DOWNLOAD"), tr("<b>Download the latest \"OpenStreetMap (OSM)\" data for the regions you picked under \"Map Sources\"</b> so \"Speed Limit Controller\" has the latest speed limit data."));
   QObject::connect(downloadMapsButton, &ButtonControl::clicked, [this] {
     if (downloadMapsButton->text() == tr("CANCEL")) {
       if (FrogPilotConfirmationDialog::yesorno(tr("Cancel the download?"), this)) {
@@ -42,7 +41,7 @@ FrogPilotMapsPanel::FrogPilotMapsPanel(FrogPilotSettingsWindow *parent) : FrogPi
   settingsList->addItem(lastMapsDownload = new LabelControl(tr("Last Updated"), params.get("LastMapsUpdate").empty() ? "Never" : QString::fromStdString(params.get("LastMapsUpdate"))));
 
   selectMaps = new FrogPilotButtonsControl(tr("Map Sources"),
-                                           tr("<b>Select the countries or U.S. states to use with \"Speed Limit Controller\".</b>") ,
+                                           tr("<b>Choose the countries or U.S. states whose map data is downloaded for \"Speed Limit Controller\" to use.</b>") ,
                                               "", {tr("COUNTRIES"), tr("STATES")});
   QObject::connect(selectMaps, &FrogPilotButtonsControl::buttonClicked, [mapsLayout, this](int id) {
     mapsLayout->setCurrentIndex(id + 1);
@@ -59,7 +58,7 @@ FrogPilotMapsPanel::FrogPilotMapsPanel(FrogPilotSettingsWindow *parent) : FrogPi
   downloadStatus->setVisible(false);
   downloadTimeElapsed->setVisible(false);
 
-  removeMapsButton = new ButtonControl(tr("Remove Maps"), tr("REMOVE"), tr("<b>Delete downloaded map data</b> to free up storage space."));
+  removeMapsButton = new ButtonControl(tr("Remove Maps"), tr("REMOVE"), tr("<b>Delete all of your downloaded offline maps</b> to free up storage space. You'll need to re-download them to use offline maps again!"));
   QObject::connect(removeMapsButton, &ButtonControl::clicked, [this] {
     if (FrogPilotConfirmationDialog::yesorno(tr("Delete all downloaded maps?"), this)) {
       std::thread([this] {
@@ -72,7 +71,7 @@ FrogPilotMapsPanel::FrogPilotMapsPanel(FrogPilotSettingsWindow *parent) : FrogPi
   settingsList->addItem(removeMapsButton);
 
   resetMapdButton = new ButtonControl(tr("Reset Downloader"), tr("RESET"),
-                                   tr("<b>Reset the map downloader.</b> Use this if downloads are stuck or failing."));
+                                   tr("<b>Clear all downloaded map data and restart the map downloader from scratch.</b> Use this if downloads get stuck or keep failing. You'll need to re-download your maps afterward!"));
   QObject::connect(resetMapdButton, &ButtonControl::clicked, [parent, this]() {
     if (ConfirmationDialog::confirm(tr("Reset the map downloader? Your device will reboot afterward."), tr("Reset"), this)) {
       std::thread([parent, this]() {

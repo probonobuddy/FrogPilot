@@ -181,7 +181,7 @@ FrogPilotSettingsWindow::FrogPilotSettingsWindow(SettingsWindow *parent) : QFram
 
   std::vector<QString> togglePresets{tr("Minimal"), tr("Standard"), tr("Advanced"), tr("Developer")};
   togglePreset = new FrogPilotButtonsControl(tr("Tuning Level"),
-                                             tr("Choose your tuning level. Lower levels keep it simple; higher levels unlock more toggles for finer control.\n\n"
+                                             tr("Choose your tuning level. Lower levels keep it simple. Higher levels reveal more toggles for finer control.\n\n"
                                                 "Minimal - Ideal for those who prefer simplicity or ease of use\n"
                                                 "Standard - Recommended for most users for a balanced experience\n"
                                                 "Advanced - Fine-tuning for experienced users\n"

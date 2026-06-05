@@ -21,8 +21,7 @@ FrogPilotNavigationPanel::FrogPilotNavigationPanel(FrogPilotSettingsWindow *pare
 
   std::vector<QString> searchOptions{tr("Mapbox"), tr("Amap")};
   searchInput = new FrogPilotButtonsControl(tr("Destination Search Provider"),
-                                            tr("<b>The search provider used for destination queries</b> in \"Navigate on Openpilot\". "
-                                               "Options include Mapbox (recommended) and Amap."),
+                                            tr("<b>The search provider used for \"Navigate on openpilot's\" destination search.</b><br><br>- \"Mapbox\": Shows the public and secret Mapbox key fields plus setup steps.<br>- \"Amap\": Shows both Amap key fields.<br><br>Default: Mapbox."),
                                                "", searchOptions, true);
   QObject::connect(searchInput, &FrogPilotButtonsControl::buttonClicked, [this](int id) {
     amapKeyControl1->setVisible(id == 1);
@@ -38,10 +37,10 @@ FrogPilotNavigationPanel::FrogPilotNavigationPanel(FrogPilotSettingsWindow *pare
   searchInput->setCheckedButton(params.getInt("SearchInput"));
   settingsList->addItem(searchInput);
 
-  createKeyControl(amapKeyControl1, tr("Amap Key #1"), "AMapKey1", "", 39, settingsList);
-  createKeyControl(amapKeyControl2, tr("Amap Key #2"), "AMapKey2", "", 39, settingsList);
+  createKeyControl(amapKeyControl1, tr("Amap API Key"), "AMapKey1", "", 39, settingsList);
+  createKeyControl(amapKeyControl2, tr("Amap Security Code"), "AMapKey2", "", 39, settingsList);
 
-  publicMapboxKeyControl = new FrogPilotButtonsControl(tr("Public Mapbox Key"), tr("<b>Manage your Public Mapbox Key.</b>"), "", {tr("ADD"), tr("TEST")});
+  publicMapboxKeyControl = new FrogPilotButtonsControl(tr("Public Mapbox Key"), tr("<b>Add or test your public Mapbox key (<i>pk.</i>), one of the two keys that enable Mapbox navigation and destination search.</b>"), "", {tr("ADD"), tr("TEST")});
   QObject::connect(publicMapboxKeyControl, &FrogPilotButtonsControl::buttonClicked, [this](int id) {
     if (id == 0) {
       if (mapboxPublicKeySet) {
@@ -88,7 +87,7 @@ FrogPilotNavigationPanel::FrogPilotNavigationPanel(FrogPilotSettingsWindow *pare
   });
   settingsList->addItem(publicMapboxKeyControl);
 
-  secretMapboxKeyControl = new FrogPilotButtonsControl(tr("Secret Mapbox Key"), tr("<b>Manage your Secret Mapbox Key.</b>"), "", {tr("ADD"), tr("TEST")});
+  secretMapboxKeyControl = new FrogPilotButtonsControl(tr("Secret Mapbox Key"), tr("<b>Add or test your secret Mapbox key (<i>sk.</i>), the other key that enables Mapbox navigation and destination search.</b>"), "", {tr("ADD"), tr("TEST")});
   QObject::connect(secretMapboxKeyControl, &FrogPilotButtonsControl::buttonClicked, [this](int id) {
     if (id == 0) {
       if (mapboxSecretKeySet) {
@@ -135,7 +134,7 @@ FrogPilotNavigationPanel::FrogPilotNavigationPanel(FrogPilotSettingsWindow *pare
   });
   settingsList->addItem(secretMapboxKeyControl);
 
-  setupButton = new ButtonControl(tr("Mapbox Setup Instructions"), tr("VIEW"), tr("<b>Instructions on how to set up Mapbox</b> for \"Primeless Navigation\"."), this);
+  setupButton = new ButtonControl(tr("View Mapbox Setup"), tr("VIEW"), tr("<b>Opens a step-by-step walkthrough for setting up your own Mapbox keys for \"Primeless Navigation\".</b>"), this);
   QObject::connect(setupButton, &ButtonControl::clicked, [this]() {
     openSubPanel();
 
@@ -146,12 +145,7 @@ FrogPilotNavigationPanel::FrogPilotNavigationPanel(FrogPilotSettingsWindow *pare
   settingsList->addItem(setupButton);
 
   updateSpeedLimitsToggle = new FrogPilotButtonControl("SpeedLimitFiller", tr("Speed Limit Filler"),
-                                                    tr("<b>Automatically collect missing or incorrect speed limits while you drive</b> using speeds limits sourced from your dashboard (if supported), "
-                                                       "Mapbox, and \"Navigate on openpilot\".<br><br>"
-                                                       "When you're parked, FrogPilot will automatically process this data into a file "
-                                                       "to be used with the tool located at \"SpeedLimitFiller.frogpilot.com\".<br><br>"
-                                                       "You can download this file from \"The Pond\" in the \"Download Speed Limits\" menu.<br><br>"
-                                                       "Need a step-by-step guide? Visit <b>#speed-limit-filler</b> in the FrogPilot Discord!"),
+                                                    tr("<b>While you drive, FrogPilot collects missing or incorrect speed limits from your dashboard (if supported), Mapbox, and \"Navigate on openpilot\", then processes them into a file when you park.</b> Turn this on to help improve local speed-limit data, downloadable from \"The Pond\". Leave it off if you do not want FrogPilot collecting your speed-limit data."),
                                                        "", {});
   settingsList->addItem(updateSpeedLimitsToggle);
 
@@ -233,7 +227,7 @@ void FrogPilotNavigationPanel::mousePressEvent(QMouseEvent *event) {
 }
 
 void FrogPilotNavigationPanel::createKeyControl(ButtonControl *&control, const QString &label, const std::string &paramKey, const QString &prefix, const int &minLength, FrogPilotListWidget *list) {
-  control = new ButtonControl(label, "", tr("<b>Manage your \"%1\".</b>").arg(label));
+  control = new ButtonControl(label, "", tr("<b>Add or remove an Amap (Gaode) credential used for Amap destination search.</b> Enter both the API key and the security code. These are used instead of Mapbox keys."));
   QObject::connect(control, &ButtonControl::clicked, [=] {
     if (control->text() == tr("ADD")) {
       QString key = InputDialog::getText(tr("Enter your %1").arg(label), this, "", false, minLength).trimmed();

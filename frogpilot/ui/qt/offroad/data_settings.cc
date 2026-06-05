@@ -24,7 +24,7 @@ FrogPilotDataPanel::FrogPilotDataPanel(FrogPilotSettingsWindow *parent) : FrogPi
   ScrollView *statsLabelsPanel = new ScrollView(statsLabelsList, this);
   dataLayout->addWidget(statsLabelsPanel);
 
-  ButtonControl *deleteDrivingDataButton = new ButtonControl(tr("Delete Driving Data"), tr("DELETE"), tr("<b>Delete all stored driving footage and data</b> to free up space and clear private information."));
+  ButtonControl *deleteDrivingDataButton = new ButtonControl(tr("Delete Driving Data"), tr("DELETE"), tr("<b>Permanently delete all recorded drive footage and logs from the device.</b> Use this to free up storage or wipe personal data. Anything not preserved is gone for good!"));
   QObject::connect(deleteDrivingDataButton, &ButtonControl::clicked, [=]() {
     QDir hdDataDir("/data/media/0/realdata_HD/");
     QDir konikDataDir("/data/media/0/realdata_konik/");
@@ -68,7 +68,7 @@ FrogPilotDataPanel::FrogPilotDataPanel(FrogPilotSettingsWindow *parent) : FrogPi
   }
   dataMainList->addItem(deleteDrivingDataButton);
 
-  ButtonControl *deleteErrorLogsButton = new ButtonControl(tr("Delete Error Logs"), tr("DELETE"), tr("<b>Delete collected error logs</b> to free up space and clear old crash records."));
+  ButtonControl *deleteErrorLogsButton = new ButtonControl(tr("Delete Error Logs"), tr("DELETE"), tr("<b>Permanently deletes openpilot's saved crash and error logs.</b> Leave these in place if you might report a bug, since they hold the records used to diagnose crashes. Clear them once you no longer need that history."));
   QObject::connect(deleteErrorLogsButton, &ButtonControl::clicked, [=]() {
     QDir errorLogsDir("/data/error_logs");
 
@@ -98,7 +98,7 @@ FrogPilotDataPanel::FrogPilotDataPanel(FrogPilotSettingsWindow *parent) : FrogPi
   }
   dataMainList->addItem(deleteErrorLogsButton);
 
-  FrogPilotButtonsControl *screenRecordingsButton = new FrogPilotButtonsControl(tr("Screen Recordings"), tr("<b>Delete or rename screen recordings.</b>"), "", {tr("DELETE"), tr("DELETE ALL"), tr("RENAME")});
+  FrogPilotButtonsControl *screenRecordingsButton = new FrogPilotButtonsControl(tr("Screen Recordings"), tr("<b>Manage the screen recordings saved by the \"Screen Recorder\".</b> Tap \"DELETE\" to remove one recording, \"DELETE ALL\" to remove every recording, or \"RENAME\" to give one a new name."), "", {tr("DELETE"), tr("DELETE ALL"), tr("RENAME")});
   QObject::connect(screenRecordingsButton, &FrogPilotButtonsControl::buttonClicked, [=](int id) {
     QDir recordingsDir("/data/media/screen_recordings");
     QStringList recordingsNames = recordingsDir.entryList(QDir::Files | QDir::NoDotAndDotDot);
@@ -212,7 +212,7 @@ FrogPilotDataPanel::FrogPilotDataPanel(FrogPilotSettingsWindow *parent) : FrogPi
   }
   dataMainList->addItem(screenRecordingsButton);
 
-  FrogPilotButtonsControl *frogpilotBackupButton = new FrogPilotButtonsControl(tr("FrogPilot Backups"), tr("<b>Create, delete, or restore FrogPilot backups.</b>"), "", {tr("BACKUP"), tr("DELETE"), tr("DELETE ALL"), tr("RESTORE")});
+  FrogPilotButtonsControl *frogpilotBackupButton = new FrogPilotButtonsControl(tr("FrogPilot Backups"), tr("<b>Save a full copy of your FrogPilot install so you can roll back, or restore one (which overwrites the entire install and reboots the device).</b> Tap \"BACKUP\" to save the current install (optionally compressed), \"DELETE\" or \"DELETE ALL\" to remove saved copies, and \"RESTORE\" to roll back to a chosen backup."), "", {tr("BACKUP"), tr("DELETE"), tr("DELETE ALL"), tr("RESTORE")});
   QObject::connect(frogpilotBackupButton, &FrogPilotButtonsControl::buttonClicked, [=](int id) {
     QDir backupDir("/data/backups");
     QStringList backupNames = backupDir.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name).filter(QRegularExpression("^(?!.*_in_progress(?:\\..*)?$).*$"));
@@ -420,7 +420,7 @@ FrogPilotDataPanel::FrogPilotDataPanel(FrogPilotSettingsWindow *parent) : FrogPi
   }
   dataMainList->addItem(frogpilotBackupButton);
 
-  FrogPilotButtonsControl *toggleBackupButton = new FrogPilotButtonsControl(tr("Toggle Backups"), tr("<b>Create, delete, or restore toggle backups.</b>"), "", {tr("BACKUP"), tr("DELETE"), tr("DELETE ALL"), tr("RESTORE")});
+  FrogPilotButtonsControl *toggleBackupButton = new FrogPilotButtonsControl(tr("Toggle Backups"), tr("<b>Save backup copies of your FrogPilot toggle settings.</b> \"BACKUP\" saves your current settings under a name, \"DELETE\" and \"DELETE ALL\" remove saved backups, and \"RESTORE\" applies a saved copy over your current settings."), "", {tr("BACKUP"), tr("DELETE"), tr("DELETE ALL"), tr("RESTORE")});
   QObject::connect(toggleBackupButton, &FrogPilotButtonsControl::buttonClicked, [=](int id) {
     QDir backupDir("/data/toggle_backups");
     QStringList backupNames = backupDir.entryList(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot, QDir::Name).filter(QRegularExpression("^(?!.*_in_progress$).*$"));
@@ -599,7 +599,7 @@ FrogPilotDataPanel::FrogPilotDataPanel(FrogPilotSettingsWindow *parent) : FrogPi
   }
   dataMainList->addItem(toggleBackupButton);
 
-  FrogPilotButtonsControl *viewStatsButton = new FrogPilotButtonsControl(tr("FrogPilot Stats"), tr("<b>View your collected FrogPilot stats.</b>"), "", {tr("RESET"), tr("VIEW")});
+  FrogPilotButtonsControl *viewStatsButton = new FrogPilotButtonsControl(tr("Driving Stats"), tr("<b>View a summary of your collected driving stats, or reset them.</b> \"RESET\" permanently erases every collected stat. \"VIEW\" opens your tallies, like total drives, distance, time, engagements, and more."), "", {tr("RESET"), tr("VIEW")});
   QObject::connect(viewStatsButton, &FrogPilotButtonsControl::buttonClicked, [dataLayout, statsLabelsPanel, this](int id) {
     if (id == 0) {
       if (ConfirmationDialog::confirm(tr("Are you sure you want to reset all of your FrogPilot stats?"), tr("Reset"), this)) {
