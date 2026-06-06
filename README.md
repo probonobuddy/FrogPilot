@@ -1,3 +1,111 @@
+# My comma 3X FrogPilot branches
+
+This is my personal FrogPilot fork. The two controller branches below can both be
+stored on the comma 3X, but only one branch can be checked out and control the
+vehicle at a time.
+
+| Branch | Curve controller behavior |
+| --- | --- |
+| `csc-2ms2-cap` | Learned Curve Speed Controller with a hard 2.0 m/s² lateral-acceleration cap. |
+| `codex/manual-vision-turn-controller` | Deterministic, manually adjustable vision turn controller restored from the older FrogPilot implementation. At settings above 100%, this branch can request more than 2.0 m/s². |
+
+## Before running these commands
+
+1. Park the vehicle safely and leave the comma 3X powered on.
+2. Connect the comma 3X to Wi-Fi.
+3. SSH into the comma 3X.
+4. Run every command below from `/data/openpilot`.
+
+These instructions assume FrogPilot is already installed at `/data/openpilot`.
+
+## Make both branches available
+
+Run:
+
+```bash
+cd /data/openpilot
+
+if git remote get-url myfork >/dev/null 2>&1; then
+  git remote set-url myfork https://github.com/probonobuddy/FrogPilot.git
+else
+  git remote add myfork https://github.com/probonobuddy/FrogPilot.git
+fi
+
+git fetch --prune myfork \
+  csc-2ms2-cap:refs/remotes/myfork/csc-2ms2-cap \
+  codex/manual-vision-turn-controller:refs/remotes/myfork/codex/manual-vision-turn-controller
+```
+
+Confirm that both branches are stored on the comma 3X:
+
+```bash
+git branch -r --list \
+  myfork/csc-2ms2-cap \
+  myfork/codex/manual-vision-turn-controller
+```
+
+The output must include:
+
+```text
+myfork/codex/manual-vision-turn-controller
+myfork/csc-2ms2-cap
+```
+
+## Use the 2.0 m/s² capped controller
+
+```bash
+cd /data/openpilot
+git checkout -B csc-2ms2-cap myfork/csc-2ms2-cap
+python3 -m py_compile frogpilot/controls/lib/curve_speed_controller.py
+grep -n "MAX_CALIBRATED_LATERAL_ACCELERATION" \
+  frogpilot/controls/lib/curve_speed_controller.py
+git branch --show-current
+git log -1 --oneline
+sudo reboot
+```
+
+Before rebooting, `git branch --show-current` must print `csc-2ms2-cap`.
+
+## Use the manual vision turn controller
+
+```bash
+cd /data/openpilot
+git checkout -B codex/manual-vision-turn-controller \
+  myfork/codex/manual-vision-turn-controller
+python3 -m py_compile frogpilot/controls/lib/curve_speed_controller.py
+grep -n "CurveSensitivity\|TurnAggressiveness" \
+  frogpilot/common/frogpilot_variables.py
+git branch --show-current
+git log -1 --oneline
+sudo reboot
+```
+
+Before rebooting, `git branch --show-current` must print
+`codex/manual-vision-turn-controller`.
+
+## Switch later or download updates
+
+Both branches remain available after switching. To change controllers later,
+repeat the appropriate checkout, verification, and reboot section above.
+
+Before switching, or after either branch receives an update, refresh both remote
+branches:
+
+```bash
+cd /data/openpilot
+git fetch --prune myfork \
+  csc-2ms2-cap:refs/remotes/myfork/csc-2ms2-cap \
+  codex/manual-vision-turn-controller:refs/remotes/myfork/codex/manual-vision-turn-controller
+```
+
+Always inspect upstream FrogPilot staging changes before merging or rebasing
+either custom branch. In particular, check for changes to the Curve Speed
+Controller, model data, longitudinal planning, parameter names, and settings UI.
+Do not assume an update is safe merely because Git applies it without a
+conflict.
+
+---
+
 <div align="center" style="text-align: center;">
 
 <h1>openpilot</h1>
