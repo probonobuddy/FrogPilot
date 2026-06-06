@@ -8,6 +8,7 @@ from openpilot.frogpilot.common.frogpilot_variables import CRUISING_SPEED, DEFAU
 
 CALIBRATION_PROGRESS_THRESHOLD = 10 / DT_MDL
 MAX_CURVATURE = 0.1
+MAX_CALIBRATED_LATERAL_ACCELERATION = 2.0
 MIN_CURVATURE = 0.001
 PERCENTILE = 90
 ROUNDING_PRECISION = 5
@@ -37,7 +38,7 @@ class CurveSpeedController:
       self.training_timer += DT_MDL
 
       if self.training_timer >= PLANNER_TIME and self.frogpilot_planner.driving_in_curve and not (sm["carState"].leftBlinker or sm["carState"].rightBlinker):
-        lateral_acceleration = abs(self.frogpilot_planner.lateral_acceleration)
+        lateral_acceleration = min(abs(self.frogpilot_planner.lateral_acceleration), MAX_CALIBRATED_LATERAL_ACCELERATION)
         road_curvature = abs(round(self.frogpilot_planner.road_curvature, ROUNDING_PRECISION))
 
         key = str(road_curvature)
@@ -86,6 +87,7 @@ class CurveSpeedController:
     else:
       self.lateral_acceleration = DEFAULT_LATERAL_ACCELERATION
 
+    self.lateral_acceleration = min(self.lateral_acceleration, MAX_CALIBRATED_LATERAL_ACCELERATION)
     params.put_float_nonblocking("CalibratedLateralAcceleration", self.lateral_acceleration)
 
   def update_target(self, v_ego):
