@@ -210,6 +210,7 @@ frogpilot_default_params: list[tuple[str, str | bytes, int, str]] = [
   ("ClusterOffset", "1.015", 2, "1.015"),
   ("Compass", "0", 1, "0"),
   ("ConditionalExperimental", "1", 1, "0"),
+  ("CurveSensitivity", "100", 2, "100"),
   ("CurvatureData", "", 2, ""),
   ("CurveSpeedController", "1", 1, "0"),
   ("CustomAlerts", "0", 0, "0"),
@@ -477,6 +478,7 @@ frogpilot_default_params: list[tuple[str, str | bytes, int, str]] = [
   ("TrafficPersonalityProfile", "1", 2, "0"),
   ("TuningLevel", "0", 0, "0"),
   ("TuningLevelConfirmed", "0", 0, "0"),
+  ("TurnAggressiveness", "100", 2, "100"),
   ("TurnDesires", "0", 2, "0"),
   ("UnlimitedLength", "1", 2, "0"),
   ("UnlockDoors", "1", 0, "0"),
@@ -718,6 +720,8 @@ class FrogPilotVariables:
     toggle.cem_status = toggle.conditional_experimental_mode and (params.get_bool("ShowCEMStatus") if toggle.tuning_level >= level["ShowCEMStatus"] else default.get_bool("ShowCEMStatus")) or toggle.debug_mode
 
     toggle.curve_speed_controller = toggle.openpilot_longitudinal and (params.get_bool("CurveSpeedController") if toggle.tuning_level >= level["CurveSpeedController"] else default.get_bool("CurveSpeedController"))
+    toggle.curve_sensitivity = np.clip(params.get_int("CurveSensitivity") / 100, 0.5, 1.5) if toggle.curve_speed_controller and toggle.tuning_level >= level["CurveSensitivity"] else default.get_int("CurveSensitivity") / 100
+    toggle.turn_aggressiveness = np.clip(params.get_int("TurnAggressiveness") / 100, 0.5, 1.5) if toggle.curve_speed_controller and toggle.tuning_level >= level["TurnAggressiveness"] else default.get_int("TurnAggressiveness") / 100
     toggle.csc_status = toggle.curve_speed_controller and (params.get_bool("ShowCSCStatus") if toggle.tuning_level >= level["ShowCSCStatus"] else default.get_bool("ShowCSCStatus")) or toggle.debug_mode
 
     toggle.custom_alerts = params.get_bool("CustomAlerts") if toggle.tuning_level >= level["CustomAlerts"] else default.get_bool("CustomAlerts")

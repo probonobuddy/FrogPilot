@@ -101,10 +101,9 @@ FrogPilotLongitudinalPanel::FrogPilotLongitudinalPanel(FrogPilotSettingsWindow *
     {"CESignalSpeed", tr("Turn Signal Below"), tr("<b>Switch to \"Experimental Mode\" when using a turn signal below the set speed</b> to allow the model to choose an appropriate speed for smoother left and right turns."), ""},
     {"ShowCEMStatus", tr("Status Widget"), tr("<b>Show which condition triggered \"Experimental Mode\"</b> on the driving screen."), ""},
 
-    {"CurveSpeedController", tr("Curve Speed Controller"), tr("<b>Automatically slow down for upcoming curves</b> using data learned from your driving style, adapting to curves as you would."), "../../frogpilot/assets/toggle_icons/icon_speed_map.png"},
-    {"CalibratedLateralAcceleration", tr("Calibrated Lateral Acceleration"), tr("<b>The learned lateral acceleration from collected driving data.</b> This sets how fast openpilot will take curves. Higher values allow faster cornering; lower values slow the vehicle for gentler turns."), ""},
-    {"CalibrationProgress", tr("Calibration Progress"), tr("<b>How much curve data has been collected.</b> This is a progress meter; it is normal for the value to stay low and rarely reach 100%."), ""},
-    {"ResetCurveData", tr("Reset Curve Data"), tr("<b>Reset collected user data for \"Curve Speed Controller\".</b>"), ""},
+    {"CurveSpeedController", tr("Curve Speed Controller"), tr("<b>Automatically slow down for upcoming curves</b> using the model's predicted road curvature and your manual settings."), "../../frogpilot/assets/toggle_icons/icon_speed_map.png"},
+    {"CurveSensitivity", tr("Curve Detection Sensitivity"), tr("<b>Adjust how strongly predicted curvature affects the requested speed.</b> Higher values slow sooner and more for curves; lower values respond later and allow faster turns."), ""},
+    {"TurnAggressiveness", tr("Turn Speed Aggressiveness"), tr("<b>Set the target lateral acceleration for curves.</b> Higher values allow faster turns; lower values produce gentler turns. 100% uses the historical 2.0 m/s² base target."), ""},
     {"ShowCSCStatus", tr("Status Widget"), tr("<b>Show the \"Curve Speed Controller\" target speed on the driving screen.</b>"), ""},
 
     {"CustomPersonalities", tr("Driving Personalities"), tr("<b>Customize the \"Driving Personalities\"</b> to better match your driving style."), "../../frogpilot/assets/toggle_icons/icon_personality.png"},
@@ -284,29 +283,8 @@ FrogPilotLongitudinalPanel::FrogPilotLongitudinalPanel(FrogPilotSettingsWindow *
         longitudinalLayout->setCurrentWidget(curveSpeedPanel);
       });
       longitudinalToggle = curveControlToggle;
-    } else if (param == "CalibrationProgress") {
-      calibrationProgressLabel = new LabelControl(title, QString::number(params.getFloat("CalibrationProgress"), 'f', 2) + "%", desc);
-      longitudinalToggle = calibrationProgressLabel;
-    } else if (param == "CalibratedLateralAcceleration") {
-      calibratedLateralAccelerationLabel = new LabelControl(title, QString::number(params.getFloat("CalibratedLateralAcceleration"), 'f', 2) + tr(" m/s²"), desc);
-      longitudinalToggle = calibratedLateralAccelerationLabel;
-    } else if (param == "ResetCurveData") {
-      ButtonControl *resetCurveDataButton = new ButtonControl(title, tr("RESET"), desc);
-      QObject::connect(resetCurveDataButton, &ButtonControl::clicked, [this]() {
-        if (FrogPilotConfirmationDialog::yesorno(tr("Are you sure you want to completely reset your curvature data?"), this)) {
-          params.putFloat("CalibratedLateralAcceleration", 2.00);
-          params.remove("CalibrationProgress");
-          params.remove("CurvatureData");
-
-          params_cache.putFloat("CalibratedLateralAcceleration", 2.00);
-          params_cache.remove("CalibrationProgress");
-          params_cache.remove("CurvatureData");
-
-          calibratedLateralAccelerationLabel->setText(QString::number(2.00, 'f', 2) + tr(" m/s²"));
-          calibrationProgressLabel->setText(QString::number(0.00, 'f', 2) + "%");
-        }
-      });
-      longitudinalToggle = resetCurveDataButton;
+    } else if (param == "CurveSensitivity" || param == "TurnAggressiveness") {
+      longitudinalToggle = new FrogPilotParamValueControl(param, title, desc, icon, 50, 150, "%");
 
     } else if (param == "CustomPersonalities") {
       FrogPilotManageControl *customPersonalitiesToggle = new FrogPilotManageControl(param, title, desc, icon);
@@ -853,9 +831,6 @@ void FrogPilotLongitudinalPanel::showEvent(QShowEvent *event) {
   FrogPilotUIState &fs = *frogpilotUIState();
 
   frogpilotToggleLevels = parent->frogpilotToggleLevels;
-
-  calibratedLateralAccelerationLabel->setText(QString::number(params.getFloat("CalibratedLateralAcceleration"), 'f', 2) + tr(" m/s²"));
-  calibrationProgressLabel->setText(QString::number(params.getFloat("CalibrationProgress"), 'f', 2) + "%");
 
   longitudinalActuatorDelayToggle->setTitle(QString(tr("Actuator Delay (Default: %1)")).arg(QString::number(parent->longitudinalActuatorDelay, 'f', 2)));
   startAccelToggle->setTitle(QString(tr("Start Acceleration (Default: %1)")).arg(QString::number(parent->startAccel, 'f', 2)));
