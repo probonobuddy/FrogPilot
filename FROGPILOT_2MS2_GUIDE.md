@@ -106,3 +106,13 @@ A clean reinstall of official staging can also use `staging.frogpilot.download` 
 Use a familiar, low-traffic route in good weather. Stay fully attentive and ready to take over immediately. Confirm that curve entry speeds are more conservative before trying demanding roads.
 
 This change lowers the curve-speed calibration ceiling. It does not increase steering authority or make the vehicle capable of taking curves beyond its existing actuator limits.
+
+## Updating after a new staging release
+
+Use the separate, detailed update guide:
+
+```text
+UPDATING_FROGPILOT_STAGING.md
+```
+
+It requires checking upstream changes to the Curve Speed Controller and its integration before merging.
