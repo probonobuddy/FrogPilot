@@ -106,6 +106,10 @@
         <source>for "%1"</source>
         <translation type="gpt-5-generated">for "%1"</translation>
     </message>
+    <message>
+        <source>Share your device's internet connection with other devices, either all the time or only while driving.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AnnotatedCameraWidget</name>
@@ -979,6 +983,22 @@
         <source>Time Spent in Weather:</source>
         <translation type="gpt-5-generated">Time Spent in Sky Mood:</translation>
     </message>
+    <message>
+        <source>Distance Driven This Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driving (Daytime)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driving (Nighttime)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driven (Weather):</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FrogPilotDevicePanel</name>
@@ -1195,7 +1215,7 @@
     </message>
     <message>
         <source>openpilot Crashes</source>
-        <translation type="gpt-5-generated" />
+        <translation type="gpt-5-generated"></translation>
     </message>
     <message>
         <source>This Is Fine Moments</source>
@@ -2628,6 +2648,26 @@
         <source>Invalid key! (Error: %1)</source>
         <translation type="gpt-5-generated">Bad key! (Error: %1)</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Automatically slow down for upcoming curves&lt;/b&gt; using the model's predicted road curvature and your manual settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Curve Detection Sensitivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Adjust how strongly predicted curvature affects the requested speed.&lt;/b&gt; Higher values slow sooner and more for curves; lower values respond later and allow faster turns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turn Speed Aggressiveness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Set the target lateral acceleration for curves.&lt;/b&gt; Higher values allow faster turns; lower values produce gentler turns. 100% uses the historical 2.0 m/s² base target.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FrogPilotManageControl</name>
@@ -3516,7 +3556,7 @@ Developer - Many custom setting for seasoned enthusiast</translation>
     </message>
     <message>
         <source>FrogPilot Alerts</source>
-        <translation type="gpt-5-generated" />
+        <translation type="gpt-5-generated"></translation>
     </message>
     <message>
         <source>&lt;b&gt;Optional FrogPilot alerts&lt;/b&gt; that highlight driving events in a more noticeable way.</source>

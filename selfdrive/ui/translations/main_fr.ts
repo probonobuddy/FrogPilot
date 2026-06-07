@@ -106,6 +106,10 @@
         <source>Allow tethering with your data SIM and keep it active either while driving or continuously.</source>
         <translation type="gpt-5-generated">Autorisez le partage de connexion avec votre carte SIM de données et maintenez-le actif soit pendant la conduite, soit en continu.</translation>
     </message>
+    <message>
+        <source>Share your device's internet connection with other devices, either all the time or only while driving.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AnnotatedCameraWidget</name>
@@ -977,6 +981,22 @@
     <message>
         <source>Time Spent in Weather:</source>
         <translation type="gpt-5-generated">Temps passé par météo</translation>
+    </message>
+    <message>
+        <source>Distance Driven This Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driving (Daytime)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driving (Nighttime)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driven (Weather):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2625,6 +2645,26 @@
     <message>
         <source>Invalid key! (Error: %1)</source>
         <translation type="gpt-5-generated">Clé invalide ! (Erreur : %1)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Automatically slow down for upcoming curves&lt;/b&gt; using the model's predicted road curvature and your manual settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Curve Detection Sensitivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Adjust how strongly predicted curvature affects the requested speed.&lt;/b&gt; Higher values slow sooner and more for curves; lower values respond later and allow faster turns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turn Speed Aggressiveness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Set the target lateral acceleration for curves.&lt;/b&gt; Higher values allow faster turns; lower values produce gentler turns. 100% uses the historical 2.0 m/s² base target.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

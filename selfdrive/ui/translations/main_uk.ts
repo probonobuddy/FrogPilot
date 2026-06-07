@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Allow tethering with your data SIM and keep it active either while driving or continuously.</source>
-        <translation>Дозвольте точку доступу за допомогою SIM-карти з даними та залишайте її активною під час руху або постійно.</translation>
+        <translation type="vanished">Дозвольте точку доступу за допомогою SIM-карти з даними та залишайте її активною під час руху або постійно.</translation>
     </message>
     <message>
         <source>Tethering Password</source>
@@ -105,6 +105,10 @@
     <message>
         <source>for "%1"</source>
         <translation>для "%1"</translation>
+    </message>
+    <message>
+        <source>Share your device's internet connection with other devices, either all the time or only while driving.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -466,7 +470,7 @@
     <name>FrogPilotAnnotatedCameraWidget</name>
     <message>
         <source> m/s²</source>
-        <translation> м/с²</translation>
+        <translation type="vanished"> м/с²</translation>
     </message>
     <message>
         <source> meters</source>
@@ -482,7 +486,7 @@
     </message>
     <message>
         <source> ft/s²</source>
-        <translation> фт/с²</translation>
+        <translation type="vanished"> фт/с²</translation>
     </message>
     <message>
         <source> feet</source>
@@ -977,6 +981,22 @@
     <message>
         <source>Time Spent in Weather:</source>
         <translation type="gpt-5-generated">Час, проведений у погодних умовах:</translation>
+    </message>
+    <message>
+        <source>Distance Driven This Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driving (Daytime)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driving (Nighttime)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time Driven (Weather):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2040,31 +2060,31 @@
     </message>
     <message>
         <source>&lt;b&gt;Automatically slow down for upcoming curves&lt;/b&gt; using data learned from your driving style, adapting to curves as you would.</source>
-        <translation>&lt;b&gt;Автоматичне уповільнення перед вигинами&lt;/b&gt; на основі даних, отриманих з вашого стилю водіння, адаптуючись до поворотів так, як ви це робите.</translation>
+        <translation type="vanished">&lt;b&gt;Автоматичне уповільнення перед вигинами&lt;/b&gt; на основі даних, отриманих з вашого стилю водіння, адаптуючись до поворотів так, як ви це робите.</translation>
     </message>
     <message>
         <source>Calibrated Lateral Acceleration</source>
-        <translation>Каліброване поперечне прискорення</translation>
+        <translation type="vanished">Каліброване поперечне прискорення</translation>
     </message>
     <message>
         <source>&lt;b&gt;The learned lateral acceleration from collected driving data.&lt;/b&gt; This sets how fast openpilot will take curves. Higher values allow faster cornering; lower values slow the vehicle for gentler turns.</source>
-        <translation>&lt;b&gt;Вивчене поперечне прискорення на основі зібраних даних про рух автомобіля.&lt;/b&gt; Це визначає швидкість, з якою openpilot буде проїжджати повороти. Більші значення дозволяють швидше проїжджати повороти; менші значення сповільнюють автомобіль для більш плавного проходження поворотів.</translation>
+        <translation type="vanished">&lt;b&gt;Вивчене поперечне прискорення на основі зібраних даних про рух автомобіля.&lt;/b&gt; Це визначає швидкість, з якою openpilot буде проїжджати повороти. Більші значення дозволяють швидше проїжджати повороти; менші значення сповільнюють автомобіль для більш плавного проходження поворотів.</translation>
     </message>
     <message>
         <source>Calibration Progress</source>
-        <translation>Хід калібрування</translation>
+        <translation type="vanished">Хід калібрування</translation>
     </message>
     <message>
         <source>&lt;b&gt;How much curve data has been collected.&lt;/b&gt; This is a progress meter; it is normal for the value to stay low and rarely reach 100%.</source>
-        <translation>&lt;b&gt;Скільки даних про вигини було зібрано.&lt;/b&gt; Це індикатор прогресу; нормально, якщо значення залишається низьким і рідко досягає 100%.</translation>
+        <translation type="vanished">&lt;b&gt;Скільки даних про вигини було зібрано.&lt;/b&gt; Це індикатор прогресу; нормально, якщо значення залишається низьким і рідко досягає 100%.</translation>
     </message>
     <message>
         <source>Reset Curve Data</source>
-        <translation>Скинути дані вигинів</translation>
+        <translation type="vanished">Скинути дані вигинів</translation>
     </message>
     <message>
         <source>&lt;b&gt;Reset collected user data for "Curve Speed Controller".&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Скинути зібрані дані користувача для «Регулятора швидкості вигинів.&lt;/b&gt;</translation>
+        <translation type="vanished">&lt;b&gt;Скинути зібрані дані користувача для «Регулятора швидкості вигинів.&lt;/b&gt;</translation>
     </message>
     <message>
         <source>&lt;b&gt;Show the "Curve Speed Controller" target speed on the driving screen.&lt;/b&gt;</source>
@@ -2468,7 +2488,7 @@
     </message>
     <message>
         <source>Are you sure you want to completely reset your curvature data?</source>
-        <translation>Ви впевнені, що хочете повністю скинути дані про вигини?</translation>
+        <translation type="vanished">Ви впевнені, що хочете повністю скинути дані про вигини?</translation>
     </message>
     <message>
         <source>"Detected" Stop Lights/Signs</source>
@@ -2625,6 +2645,26 @@
     <message>
         <source>Invalid key! (Error: %1)</source>
         <translation type="gpt-5-generated">Неприпустимий ключ! (Помилка: %1)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Automatically slow down for upcoming curves&lt;/b&gt; using the model's predicted road curvature and your manual settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Curve Detection Sensitivity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Adjust how strongly predicted curvature affects the requested speed.&lt;/b&gt; Higher values slow sooner and more for curves; lower values respond later and allow faster turns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turn Speed Aggressiveness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Set the target lateral acceleration for curves.&lt;/b&gt; Higher values allow faster turns; lower values produce gentler turns. 100% uses the historical 2.0 m/s² base target.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
