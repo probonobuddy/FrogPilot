@@ -11,6 +11,8 @@ cdef extern from "common/params.h":
     CLEAR_ON_ONROAD_TRANSITION
     CLEAR_ON_OFFROAD_TRANSITION
     DEVELOPMENT_ONLY
+    FROGPILOT_CONTROLS
+    FROGPILOT_STORAGE
     ALL
 
     # FrogPilot variables
