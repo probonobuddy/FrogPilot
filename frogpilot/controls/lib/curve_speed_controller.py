@@ -10,6 +10,9 @@ class CurveSpeedController:
   def __init__(self, FrogPilotVCruise):
     self.frogpilot_planner = FrogPilotVCruise.frogpilot_planner
 
+    # The deterministic controller never trains, but frogpilotPlan still
+    # publishes this compatibility field.
+    self.enable_training = False
     self.target = 0.0
 
   def update_target(self, frogpilot_toggles):
