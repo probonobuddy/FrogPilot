@@ -1,108 +1,147 @@
 # My comma 3X FrogPilot branches
 
-This is my personal FrogPilot fork. The two controller branches below can both be
-stored on the comma 3X, but only one branch can be checked out and control the
-vehicle at a time.
+This is my personal FrogPilot fork. Once the comma 3X is configured to use this
+fork as its Git `origin`, FrogPilot's **Settings > Software > Target Branch**
+selector can download and switch between these branches without SSH each time.
+Only one branch can be active at a time.
 
 | Branch | Curve controller behavior |
 | --- | --- |
 | `csc-2ms2-cap` | Learned Curve Speed Controller with a hard 2.0 m/s² lateral-acceleration cap. |
 | `codex/manual-vision-turn-controller` | Deterministic, manually adjustable vision turn controller restored from the older FrogPilot implementation. At settings above 100%, this branch can request more than 2.0 m/s². |
 
-## Before running these commands
+> [!CAUTION]
+> `codex/manual-vision-turn-controller` previously failed during installation
+> with missing components and left the comma 3X unable to start FrogPilot. Do
+> not select this branch again until its installation has been repaired and
+> validated. Use `csc-2ms2-cap` as the known working custom branch.
 
-1. Park the vehicle safely and leave the comma 3X powered on.
-2. Connect the comma 3X to Wi-Fi.
-3. SSH into the comma 3X.
-4. Run every command below from `/data/openpilot`.
+## Set up SSH from my Windows computer
 
-These instructions assume FrogPilot is already installed at `/data/openpilot`.
+SSH access is useful for the one-time setup and for recovery. Publishing or
+registering the contents of `id_ed25519.pub` is expected and does not reveal the
+private key. Never publish, upload, paste, or share the private
+`C:\Users\mabra\.ssh\id_ed25519` file.
 
-## Make both branches available
+On the comma 3X:
 
-Run:
+1. Connect it to the same Wi-Fi network as the Windows computer.
+2. Open **Settings > Network > SSH**.
+3. Enable SSH.
+4. Enter the GitHub username `probonobuddy`.
+5. Find the comma's current IP address in its network settings. The previously
+   used address was `192.168.1.99`, but DHCP may assign a different address.
 
-```bash
-cd /data/openpilot
+On Windows PowerShell, display the public key if needed:
 
-if git remote get-url myfork >/dev/null 2>&1; then
-  git remote set-url myfork https://github.com/probonobuddy/FrogPilot.git
-else
-  git remote add myfork https://github.com/probonobuddy/FrogPilot.git
-fi
-
-git fetch --prune myfork \
-  csc-2ms2-cap:refs/remotes/myfork/csc-2ms2-cap \
-  codex/manual-vision-turn-controller:refs/remotes/myfork/codex/manual-vision-turn-controller
+```powershell
+Get-Content C:\Users\$env:USERNAME\.ssh\id_ed25519.pub
 ```
 
-Confirm that both branches are stored on the comma 3X:
+The public key must be registered with the `probonobuddy` GitHub account under
+**GitHub > Settings > SSH and GPG keys**. The comma downloads public keys from
+that GitHub account after the username is entered in its SSH settings.
 
-```bash
-git branch -r --list \
-  myfork/csc-2ms2-cap \
-  myfork/codex/manual-vision-turn-controller
+Connect from PowerShell:
+
+```powershell
+ssh comma@192.168.1.99 -i "$HOME\.ssh\id_ed25519"
 ```
 
-The output must include:
+Replace `192.168.1.99` if the comma displays a different IP address. On the
+first connection, verify the host prompt refers to the expected local IP and
+then accept it. A successful login shows a prompt similar to:
 
 ```text
-myfork/codex/manual-vision-turn-controller
-myfork/csc-2ms2-cap
+comma@comma-74d4d7eb:~$
 ```
 
-## Use the 2.0 m/s² capped controller
+## One-time touchscreen selector setup
+
+Perform this only while parked, with the comma 3X connected to reliable Wi-Fi.
+These instructions assume FrogPilot is installed at `/data/openpilot`.
+
+The FrogPilot branch selector only lists branches from the remote named
+`origin`. Therefore, make this personal fork the device's `origin`:
 
 ```bash
 cd /data/openpilot
-git checkout -B csc-2ms2-cap myfork/csc-2ms2-cap
-python3 -m py_compile frogpilot/controls/lib/curve_speed_controller.py
-grep -n "MAX_CALIBRATED_LATERAL_ACCELERATION" \
-  frogpilot/controls/lib/curve_speed_controller.py
-git branch --show-current
-git log -1 --oneline
+
+git remote set-url origin https://github.com/probonobuddy/FrogPilot.git
+git config --replace-all remote.origin.fetch \
+  '+refs/heads/*:refs/remotes/origin/*'
+git fetch --prune origin
+```
+
+Verify the remote and both custom branches:
+
+```bash
+git remote -v
+git branch -r --list \
+  origin/csc-2ms2-cap \
+  origin/codex/manual-vision-turn-controller
+```
+
+The output must show `https://github.com/probonobuddy/FrogPilot.git` for
+`origin` and include:
+
+```text
+origin/codex/manual-vision-turn-controller
+origin/csc-2ms2-cap
+```
+
+Reboot once to let FrogPilot recreate its updater state:
+
+```bash
 sudo reboot
 ```
 
-Before rebooting, `git branch --show-current` must print `csc-2ms2-cap`.
+## Switch branches from the comma 3X screen
 
-## Use the manual vision turn controller
+After the reboot:
 
-```bash
-cd /data/openpilot
-git checkout -B codex/manual-vision-turn-controller \
-  myfork/codex/manual-vision-turn-controller
-python3 -m py_compile frogpilot/controls/lib/curve_speed_controller.py
-grep -n "CurveSensitivity\|TurnAggressiveness" \
-  frogpilot/common/frogpilot_variables.py
-git branch --show-current
-git log -1 --oneline
-sudo reboot
-```
+1. Keep the vehicle parked and connected to Wi-Fi.
+2. Open **Settings > Software**.
+3. Press **Target Branch > Select**.
+4. Select `csc-2ms2-cap`.
+5. Confirm **download now** when prompted.
+6. Wait until downloading and finalizing are completely finished.
+7. Press **Install Update** when it appears.
+8. Allow the comma 3X to reboot.
 
-Before rebooting, `git branch --show-current` must print
-`codex/manual-vision-turn-controller`.
+Once the manual branch has been repaired and validated, the same process can be
+used to select `codex/manual-vision-turn-controller`. Do not select it while the
+caution near the top of this guide remains.
 
-## Switch later or download updates
-
-Both branches remain available after switching. To change controllers later,
-repeat the appropriate checkout, verification, and reboot section above.
-
-Before switching, or after either branch receives an update, refresh both remote
-branches:
+To confirm the active branch later, SSH into the comma and run:
 
 ```bash
-cd /data/openpilot
-git fetch --prune myfork \
-  csc-2ms2-cap:refs/remotes/myfork/csc-2ms2-cap \
-  codex/manual-vision-turn-controller:refs/remotes/myfork/codex/manual-vision-turn-controller
+git -C /data/openpilot branch --show-current
+git -C /data/openpilot log -1 --oneline
 ```
+
+## Important update behavior
+
+After this setup, the comma downloads every branch, including
+`FrogPilot-Staging`, from `probonobuddy/FrogPilot`, not directly from the
+upstream FrogPilot repository. Keep this fork's staging branch synchronized
+before selecting it.
 
 Always inspect upstream FrogPilot staging changes before merging or rebasing
 either custom branch. In particular, check for changes to the Curve Speed
 Controller, model data, longitudinal planning, parameter names, and settings UI.
 Do not assume an update is safe merely because Git applies it without a
 conflict.
+
+## Emergency notes
+
+If a branch fails to install or the comma remains on the FrogPilot loading
+screen, do not repeatedly reboot or delete `/data/backups`. Try SSH first.
+FrogPilot automatic backups are normally stored in `/data/backups`, and a
+working installation can often be restored from there.
+
+Official comma SSH documentation:
+<https://docs.comma.ai/how-to/connect-to-comma/>
 
 ---
 
